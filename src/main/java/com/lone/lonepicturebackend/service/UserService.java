@@ -1,9 +1,9 @@
 package com.lone.lonepicturebackend.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.lone.lonepicturebackend.model.dto.user.UserQueryRequest;
 import com.lone.lonepicturebackend.model.entity.User;
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.lone.lonepicturebackend.model.vo.LoginUserVO;
 import com.lone.lonepicturebackend.model.vo.UserVO;
 
@@ -90,6 +90,13 @@ public interface UserService extends IService<User> {
      */
     QueryWrapper<User> getQueryWrapper(UserQueryRequest userQueryRequest);
 
+    /**
+     * 是否为管理员
+     *
+     * @param user 当前登录的 user
+     * @return  是否是管理员 true 表示 是 、false 表示 否
+     */
+    boolean isAdmin(User user);
 
 
 

@@ -6,20 +6,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lone.lonepicturebackend.exception.BusinessException;
 import com.lone.lonepicturebackend.exception.ErrorCode;
+import com.lone.lonepicturebackend.mapper.UserMapper;
 import com.lone.lonepicturebackend.model.dto.user.UserQueryRequest;
 import com.lone.lonepicturebackend.model.entity.User;
 import com.lone.lonepicturebackend.model.enums.UserRoleEnum;
 import com.lone.lonepicturebackend.model.vo.LoginUserVO;
 import com.lone.lonepicturebackend.model.vo.UserVO;
 import com.lone.lonepicturebackend.service.UserService;
-import com.lone.lonepicturebackend.mapper.UserMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -189,6 +188,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return queryWrapper;
     }
 
+    @Override
+    public boolean isAdmin(User user) {
+        return user != null && UserRoleEnum.ADMIN.getValue().equals(user.getUserRole());
+    }
 
 
 }
