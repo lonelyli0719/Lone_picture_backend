@@ -2,6 +2,10 @@ server:
   port: 8123
   servlet:
     context-path: /api
+    # cookie 30 天过期（传递给前端）
+    session:
+      cookie:
+        max-age: 2592000
 spring:
   servlet:
     multipart:
@@ -22,6 +26,11 @@ spring:
     host: 127.0.0.1
     port: 6379
     timeout: 5000
+  # session配置
+  session:
+    store-type: redis
+    # session 30 天后过期
+    timeout: 2592000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false

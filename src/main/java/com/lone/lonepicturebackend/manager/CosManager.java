@@ -3,6 +3,7 @@ package com.lone.lonepicturebackend.manager;
 import cn.hutool.core.io.FileUtil;
 import com.lone.lonepicturebackend.config.CosClientConfig;
 import com.qcloud.cos.COSClient;
+import com.qcloud.cos.exception.CosClientException;
 import com.qcloud.cos.model.ObjectMetadata;
 import com.qcloud.cos.model.PutObjectRequest;
 import com.qcloud.cos.model.PutObjectResult;
@@ -95,6 +96,15 @@ public class CosManager {
         } finally {
             cosClient.shutdown();
         }
+    }
+
+    /**
+     * 删除对象
+     *
+     * @param key 文件 key
+     */
+    public void deleteObject(String key) throws CosClientException {
+        cosClient.deleteObject(cosClientConfig.getBucket(), key);
     }
 
 
