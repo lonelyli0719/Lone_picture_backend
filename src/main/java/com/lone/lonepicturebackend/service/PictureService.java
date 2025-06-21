@@ -4,11 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.lone.lonepicturebackend.model.dto.picture.PictureQueryRequest;
+import com.lone.lonepicturebackend.model.dto.picture.PictureReviewRequest;
+import com.lone.lonepicturebackend.model.dto.picture.PictureUploadByBatchRequest;
 import com.lone.lonepicturebackend.model.dto.picture.PictureUploadRequest;
 import com.lone.lonepicturebackend.model.entity.Picture;
 import com.lone.lonepicturebackend.model.entity.User;
 import com.lone.lonepicturebackend.model.vo.PictureVO;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -21,12 +22,12 @@ public interface PictureService extends IService<Picture> {
     /**
      * 上传图片
      *
-     * @param multipartFile
+     * @param inputSource
      * @param pictureUploadRequest
      * @param loginUser
      * @return
      */
-    PictureVO uploadPicture(MultipartFile multipartFile,
+    PictureVO uploadPicture(Object inputSource,
                             PictureUploadRequest pictureUploadRequest,
                             User loginUser);
 
@@ -57,6 +58,34 @@ public interface PictureService extends IService<Picture> {
      * @param picture 需要校验的 picture 对象
      */
     void validPicture(Picture picture);
+
+    /**
+     * 图片审核
+     *
+     * @param pictureReviewRequest 图片审核请求
+     * @param loginUser            当前登录的 user
+     */
+    void doPictureReview(PictureReviewRequest pictureReviewRequest, User loginUser);
+
+    /**
+     * 填充审核参数，方便其他方法使用
+     *
+     * @param picture   picture
+     * @param loginUser 登录的用户
+     */
+    void fillReviewParams(Picture picture, User loginUser);
+
+    /**
+     * 批量抓取和创建图片
+     *
+     * @param pictureUploadByBatchRequest
+     * @param loginUser
+     * @return 成功创建的图片数
+     */
+    Integer uploadPictureByBatch(
+            PictureUploadByBatchRequest pictureUploadByBatchRequest,
+            User loginUser
+    );
 
 
 }
