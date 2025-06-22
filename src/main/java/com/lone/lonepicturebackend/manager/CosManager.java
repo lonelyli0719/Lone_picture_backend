@@ -104,7 +104,9 @@ public class CosManager {
      * @param key 文件 key
      */
     public void deleteObject(String key) throws CosClientException {
-        cosClient.deleteObject(cosClientConfig.getBucket(), key);
+        String host = cosClientConfig.getHost();
+        String replacedKey = key.replace(host, "");
+        cosClient.deleteObject(cosClientConfig.getBucket(), replacedKey);
     }
 
 

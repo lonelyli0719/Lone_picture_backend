@@ -121,5 +121,11 @@ public class Picture {
      */
     private String thumbnailUrl;
 
+    /**
+     * 空间 id
+     */
+    private Long spaceId;
+
+
 
 }

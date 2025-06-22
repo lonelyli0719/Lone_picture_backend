@@ -3,10 +3,7 @@ package com.lone.lonepicturebackend.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.lone.lonepicturebackend.model.dto.picture.PictureQueryRequest;
-import com.lone.lonepicturebackend.model.dto.picture.PictureReviewRequest;
-import com.lone.lonepicturebackend.model.dto.picture.PictureUploadByBatchRequest;
-import com.lone.lonepicturebackend.model.dto.picture.PictureUploadRequest;
+import com.lone.lonepicturebackend.model.dto.picture.*;
 import com.lone.lonepicturebackend.model.entity.Picture;
 import com.lone.lonepicturebackend.model.entity.User;
 import com.lone.lonepicturebackend.model.vo.PictureVO;
@@ -94,4 +91,24 @@ public interface PictureService extends IService<Picture> {
      * @param oldPicture
      */
     void clearPictureFile(Picture oldPicture);
+
+    /**
+     * 检查空间图片权限
+     *
+     * @param loginUser
+     * @param picture
+     */
+    void checkPictureAuth(User loginUser, Picture picture);
+
+    /**
+     * 删除图片
+     *
+     */
+    void deletePicture(long pictureId, User loginUser);
+
+    /**
+     * 编辑图片
+     *
+     */
+    void editPicture(PictureEditRequest pictureEditRequest, User loginUser);
 }
