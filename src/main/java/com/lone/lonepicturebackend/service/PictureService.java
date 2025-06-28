@@ -7,8 +7,10 @@ import com.lone.lonepicturebackend.model.dto.picture.*;
 import com.lone.lonepicturebackend.model.entity.Picture;
 import com.lone.lonepicturebackend.model.entity.User;
 import com.lone.lonepicturebackend.model.vo.PictureVO;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author Lenovo
@@ -111,4 +113,24 @@ public interface PictureService extends IService<Picture> {
      *
      */
     void editPicture(PictureEditRequest pictureEditRequest, User loginUser);
+
+    /**
+     * 根据图片颜色搜索图片
+     *
+     */
+    List<PictureVO> searchPictureByColor(Long spaceId, String picColor, User loginUser);
+
+    /**
+     * 批量编辑图片
+     *
+     */
+    @Transactional(rollbackFor = Exception.class)
+    void editPictureByBatch(PictureEditByBatchRequest pictureEditByBatchRequest, User loginUser);
+
+    /**
+     * 批量编辑图片使用线程池优化
+     *
+     */
+    @Transactional(rollbackFor = Exception.class)
+    void batchEditPictureMetadata(PictureEditByBatchRequest pictureEditByBatchRequest, User loginUser);
 }
