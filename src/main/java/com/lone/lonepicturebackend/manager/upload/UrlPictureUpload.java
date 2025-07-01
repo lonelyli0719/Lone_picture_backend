@@ -80,6 +80,50 @@ public class UrlPictureUpload extends PictureUploadTemplate {
         String fileUrl = (String) inputSource;
         // 下载文件到临时目录
         HttpUtil.downloadFile(fileUrl, file);
+        //以下方法是用apache httpclient下载文件
+//        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+//            HttpGet httpGet = new HttpGet(fileUrl);
+//
+//            // 设置浏览器级别的请求头，避免被服务器拒绝
+//            httpGet.setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+//            httpGet.setHeader("Accept", "*/*");
+//            httpGet.setHeader("Connection", "keep-alive");
+//
+//            CloseableHttpResponse httpResponse = httpClient.execute(httpGet);
+//            int statusCode = httpResponse.getStatusLine().getStatusCode();
+//
+//            // 检查HTTP状态码
+//            if (statusCode != 200) {
+//                throw new RuntimeException("下载失败，HTTP状态码: " + statusCode +
+//                        "，URL: " + fileUrl);
+//            }
+//
+//            HttpEntity entity = httpResponse.getEntity();
+//            if (entity == null) {
+//                throw new RuntimeException("服务器返回空内容，URL: " + fileUrl);
+//            }
+//
+//            // 确保目录存在
+//            File parentDir = file.getParentFile();
+//            if (!parentDir.exists() && !parentDir.mkdirs()) {
+//                throw new RuntimeException("无法创建目录: " + parentDir.getAbsolutePath());
+//            }
+//
+//            // 写入文件
+//            try (InputStream inputStream = entity.getContent();
+//                 FileOutputStream outputStream = new FileOutputStream(file)) {
+//
+//                byte[] buffer = new byte[4096];
+//                int bytesRead;
+//                while ((bytesRead = inputStream.read(buffer)) != -1) {
+//                    outputStream.write(buffer, 0, bytesRead);
+//                }
+//            }
+//            // 验证文件是否成功写入
+//            if (!file.exists() || file.length() == 0) {
+//                throw new RuntimeException("文件写入失败或文件为空: " + file.getAbsolutePath());
+//            }
+//        }
     }
 }
 
