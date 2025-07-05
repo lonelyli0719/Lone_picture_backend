@@ -8,6 +8,7 @@ import com.lone.lonepicturebackend.common.ResultUtils;
 import com.lone.lonepicturebackend.exception.BusinessException;
 import com.lone.lonepicturebackend.exception.ErrorCode;
 import com.lone.lonepicturebackend.exception.ThrowUtils;
+import com.lone.lonepicturebackend.manager.auth.SpaceUserAuthManager;
 import com.lone.lonepicturebackend.model.constant.UserConstant;
 import com.lone.lonepicturebackend.model.dto.space.*;
 import com.lone.lonepicturebackend.model.entity.Space;
@@ -37,6 +38,8 @@ public class SpaceController {
     UserService userService;
     @Resource
     SpaceService spaceService;
+    @Resource
+    SpaceUserAuthManager spaceUserAuthManager;
 
     /**
      * 新增空间
@@ -73,8 +76,12 @@ public class SpaceController {
         // 查询数据库
         Space space = spaceService.getById(id);
         ThrowUtils.throwIf(space == null, ErrorCode.NOT_FOUND_ERROR);
+        SpaceVO spaceVO = spaceService.getSpaceVO(space, request);
+        User loginUser = userService.getLoginUser(request);
+        List<String> permissionList = spaceUserAuthManager.getPermissionList(space, loginUser);
+        spaceVO.setPermissionList(permissionList);
         // 获取封装类
-        return ResultUtils.success(spaceService.getSpaceVO(space, request));
+        return ResultUtils.success(spaceVO);
     }
 
 
